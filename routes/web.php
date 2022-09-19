@@ -19,4 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/threads/show/{id}', [App\Http\Controllers\ThreadController::class, 'show'])->name('threads');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('threads', ['as' => 'threads', 'uses' => 'App\Http\Controllers\ThreadController@index']);
+    Route::get('threads/show/{id}', ['as' => 'threads.show', 'uses' => 'App\Http\Controllers\ThreadController@show']);
+});

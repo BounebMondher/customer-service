@@ -5,3 +5,16 @@
 .nav-link-inline {
     text-decoration: underline;
 }
+
+.thread-message {
+    max-width: 70%;
+    margin-bottom: 20px;
+}
+
+.client-message {
+    float: right;
+}
+
+.client-message .card-header {
+    text-align: right;
+}
