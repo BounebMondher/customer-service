@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('threads/create', ['as' => 'threads.create', 'uses' => 'App\Http\Controllers\ThreadController@create']);
     Route::post('threads/store', ['as' => 'threads.store', 'uses' => 'App\Http\Controllers\ThreadController@store']);
     Route::post('threads/storemessage', ['as' => 'threads.storemessage', 'uses' => 'App\Http\Controllers\ThreadController@storeMessage']);
+    Route::get('threads/close/{id}', ['as' => 'threads.close', 'uses' => 'App\Http\Controllers\ThreadController@closeThread']);
 });

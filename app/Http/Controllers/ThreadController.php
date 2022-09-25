@@ -27,7 +27,14 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = Auth::user()->threads()->get();
+        if (Auth::user()->role === "admin")
+        {
+            $threads = Thread::orderBy("id", "DESC")->get();
+        }
+        else
+        {
+            $threads = Auth::user()->threads()->get();
+        }
         return view('threads.threads')->with("threads", $threads);
     }
 
@@ -86,10 +93,31 @@ class ThreadController extends Controller
         ]);
 
         $message = ThreadMessage::create(['thread_id' => $request->post('thread_id'), 'message' => $request->post("message"), 'type' => $request->post('type')]);
+        if (Auth::user()->role === "admin")
+        {
+            $thread = Thread::find($request->post('thread_id'));
+            if ($thread->status === "open")
+            {
+                $thread->status = "in progress";
+                $thread->assigned_to = Auth::user()->id;
+                $thread->save();
+            }
+        }
         if ($message->id) {
             return Redirect::route('threads.show',['id' => $request->post('thread_id')]);
         } else {
             return back()->withInput()->withErrors(['Error while adding the message to the thread, please try again. If the issue persist, contact Admin']);
         }
+    }
+
+    public function closeThread($id)
+    {
+        $thread = Thread::find($id);
+        $thread->status = "closed";
+        if ($thread->assigned_to == null) {
+            $thread->assigned_to = Auth::user()->id;
+        }
+        $thread->save();
+        return Redirect::route('threads')->with('success', 'Thread closed successfully!');
     }
 }

@@ -22,11 +22,11 @@
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
 </head>
-<body>
+<body @if (Auth::user()->role === "admin") class="admin" @endif>
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/home') }}">
+            <a class="navbar-brand" href="{{ url('/threads') }}">
                 {{ config('app.name', 'Customer Service') }}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
