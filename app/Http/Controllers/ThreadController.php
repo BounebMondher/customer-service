@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ThreadMessage;
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -119,5 +120,21 @@ class ThreadController extends Controller
         }
         $thread->save();
         return Redirect::route('threads')->with('success', 'Thread closed successfully!');
+    }
+
+    /**
+     * Generates PDF of the thread messages.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generatePdf($id)
+    {
+        $data = array();
+        $data['thread'] = $thread = Thread::find($id);
+        $data['messages'] = $thread_messages = $thread->messages()->get();
+
+        $pdf = PDF::loadView('pdf.threadPdf', $data);
+
+        return $pdf->download('thread_'.$id.'.pdf');
     }
 }
