@@ -46,4 +46,11 @@ class Thread extends Model
     public function assignedTo() {
         return $this->belongsTo(User::class, 'assigned_to');
     }
+
+    /**
+     * Get the client who create the Thread.
+     */
+    public function client() {
+        return $this->belongsTo(User::class, 'client_id');
+    }
 }

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifyMailAdmins;
+use App\Mail\NotifyMailClient;
 use App\Models\ThreadMessage;
+use App\Models\User;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Thread;
+use Mail;
+use function print_r;
 
 class ThreadController extends Controller
 {
@@ -80,6 +85,11 @@ class ThreadController extends Controller
         ]);
         $thread = Thread::create(['thread_title' => $request->post('title'), 'client_id' => Auth::user()->id, 'status' => "open"]);
         if ($thread->id) {
+            $admins = User::where('role', 'admin')->get();
+            foreach ($admins as $admin)
+            {
+                Mail::to($admin['email'])->send(new NotifyMailAdmins($admin['name'], $thread['thread_title']));
+            }
             return Redirect::route('threads')->with('success', 'Thread created successfully!');
         } else {
             return back()->withInput()->withErrors(['Error while creating the thread, please try again. If the issue persist, contact Admin']);
@@ -103,6 +113,11 @@ class ThreadController extends Controller
                 $thread->assigned_to = Auth::user()->id;
                 $thread->save();
             }
+            $client = $thread->client()->first();
+            echo "<h1>";echo Auth::user()['name'];echo "</h1>";
+            echo "<h1>";echo$thread['thread_title'];echo "</h1>";
+            echo "<pre>";print_r($client);
+            Mail::to($client['email'])->send(new NotifyMailClient(Auth::user()['name'], $client['name'], $thread['thread_title']));
         }
         if ($message->id) {
             return Redirect::route('threads.show',['id' => $request->post('thread_id')]);
