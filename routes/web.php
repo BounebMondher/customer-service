@@ -23,4 +23,7 @@ Route::get('/threads/show/{id}', [App\Http\Controllers\ThreadController::class, 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('threads', ['as' => 'threads', 'uses' => 'App\Http\Controllers\ThreadController@index']);
     Route::get('threads/show/{id}', ['as' => 'threads.show', 'uses' => 'App\Http\Controllers\ThreadController@show']);
+    Route::get('threads/create', ['as' => 'threads.create', 'uses' => 'App\Http\Controllers\ThreadController@create']);
+    Route::post('threads/store', ['as' => 'threads.store', 'uses' => 'App\Http\Controllers\ThreadController@store']);
+    Route::post('threads/storemessage', ['as' => 'threads.storemessage', 'uses' => 'App\Http\Controllers\ThreadController@storeMessage']);
 });

@@ -1,5 +1,5 @@
 .main-title {
-    color:darkred;
+    color: darkred;
 }
 
 .nav-link-inline {
@@ -17,4 +17,54 @@
 
 .client-message .card-header {
     text-align: right;
+    background-color: antiquewhite;
+}
+
+.admin-message .card-header {
+    background-color: lightcoral;
+    color: white;
+}
+
+.add-thread {
+    text-align: right;
+    margin: 15px 0;
+}
+
+.custom-select {
+    min-width: 50px;
+}
+
+.card-body .row > * {
+    padding:0!important;
+}
+
+.card-body .row {
+    min-width: 60%!important;
+}
+
+.card-body .card-header {
+    font-weight: bolder!important;
+}
+
+#thread-messages {
+    max-height: 70vh;
+}
+
+#thread-messages>.card-body {
+    overflow-y: scroll;
+}
+
+#thread-messages h2 {
+    color: lightcoral;
+    font-weight: bolder;
+}
+
+.add-message-block {
+    width: 100%;
+    padding: 25px 25px 25px 60px;
+}
+
+.add-message-block button {
+    width: 180px;
+    margin: auto;
 }

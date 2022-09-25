@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('thread_messages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('thread_id');
+            $table->longText('message');
+            $table->string('type');
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('deleted_by')->nullable();
         });
     }
 
