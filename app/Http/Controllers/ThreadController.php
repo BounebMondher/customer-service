@@ -33,12 +33,9 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role === "admin")
-        {
+        if (Auth::user()->role === "admin") {
             $threads = Thread::orderBy("id", "DESC")->get();
-        }
-        else
-        {
+        } else {
             $threads = Auth::user()->threads()->get();
         }
         return view('threads.threads')->with("threads", $threads);
@@ -86,8 +83,7 @@ class ThreadController extends Controller
         $thread = Thread::create(['thread_title' => $request->post('title'), 'client_id' => Auth::user()->id, 'status' => "open"]);
         if ($thread->id) {
             $admins = User::where('role', 'admin')->get();
-            foreach ($admins as $admin)
-            {
+            foreach ($admins as $admin) {
                 Mail::to($admin['email'])->send(new NotifyMailAdmins($admin['name'], $thread['thread_title']));
             }
             return Redirect::route('threads')->with('success', 'Thread created successfully!');
@@ -97,6 +93,12 @@ class ThreadController extends Controller
 
     }
 
+    /**
+     * Store a message belonging to a thread in the database.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function storeMessage(Request $request)
     {
         $validated = $request->validate([
@@ -104,28 +106,37 @@ class ThreadController extends Controller
         ]);
 
         $message = ThreadMessage::create(['thread_id' => $request->post('thread_id'), 'message' => $request->post("message"), 'type' => $request->post('type')]);
-        if (Auth::user()->role === "admin")
-        {
+        if (Auth::user()->role === "admin") {
             $thread = Thread::find($request->post('thread_id'));
-            if ($thread->status === "open")
-            {
+            if ($thread->status === "open") {
                 $thread->status = "in progress";
                 $thread->assigned_to = Auth::user()->id;
                 $thread->save();
             }
             $client = $thread->client()->first();
-            echo "<h1>";echo Auth::user()['name'];echo "</h1>";
-            echo "<h1>";echo$thread['thread_title'];echo "</h1>";
-            echo "<pre>";print_r($client);
+            echo "<h1>";
+            echo Auth::user()['name'];
+            echo "</h1>";
+            echo "<h1>";
+            echo $thread['thread_title'];
+            echo "</h1>";
+            echo "<pre>";
+            print_r($client);
             Mail::to($client['email'])->send(new NotifyMailClient(Auth::user()['name'], $client['name'], $thread['thread_title']));
         }
         if ($message->id) {
-            return Redirect::route('threads.show',['id' => $request->post('thread_id')]);
+            return Redirect::route('threads.show', ['id' => $request->post('thread_id')]);
         } else {
             return back()->withInput()->withErrors(['Error while adding the message to the thread, please try again. If the issue persist, contact Admin']);
         }
     }
 
+    /**
+     * Set the status of a thread to closed.
+     *
+     * @param  id
+     * @return \Illuminate\Http\Response
+     */
     public function closeThread($id)
     {
         $thread = Thread::find($id);
@@ -140,6 +151,7 @@ class ThreadController extends Controller
     /**
      * Generates PDF of the thread messages.
      *
+     * @param id
      * @return \Illuminate\Http\Response
      */
     public function generatePdf($id)
@@ -150,6 +162,6 @@ class ThreadController extends Controller
 
         $pdf = PDF::loadView('pdf.threadPdf', $data);
 
-        return $pdf->download('thread_'.$id.'.pdf');
+        return $pdf->download('thread_' . $id . '.pdf');
     }
 }

@@ -1,69 +1,85 @@
+/* main title color */
 .main-title {
     color: darkred;
 }
 
+/* nav links decoration */
 .nav-link-inline {
     text-decoration: underline;
 }
 
+/* thread message block style */
 .thread-message {
     max-width: 70%;
     margin-bottom: 20px;
 }
 
+/* client message floating right */
 .client-message {
     float: right;
 }
 
+/* client message card header color and alignment */
 .client-message .card-header {
     text-align: right;
     background-color: antiquewhite;
 }
 
+/* admin message card header color */
 .admin-message .card-header {
     background-color: lightcoral;
     color: white;
 }
 
+/* add thread block style */
 .add-thread {
     text-align: right;
     margin: 15px 0;
 }
 
+/* adjusting min width for the select paginator of the datatable */
 .custom-select {
     min-width: 50px;
 }
 
+/* removing padding for full background display */
 .card-body .row > * {
-    padding:0!important;
+    padding: 0 !important;
 }
 
+/* messages container min width */
 .card-body .row {
-    min-width: 60%!important;
+    min-width: 60% !important;
 }
 
+/* Bolder font weight for the card header */
 .card-body .card-header {
-    font-weight: bolder!important;
+    font-weight: bolder !important;
 }
 
+/* thread messages max height */
 #thread-messages {
     max-height: 70vh;
 }
 
-#thread-messages>.card-body {
+/* display scroll bar only on the Y axis */
+#thread-messages > .card-body {
     overflow-y: scroll;
 }
 
+/* custom header style */
 #thread-messages h2 {
     color: lightcoral;
     font-weight: bolder;
 }
 
+/* style for add message controls */
 .add-message-block {
     width: 100%;
     padding: 25px 25px 25px 60px;
 }
 
+/* style for message submit button */
 .add-message-block button {
     width: 180px;
     margin: auto;

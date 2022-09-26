@@ -14,7 +14,11 @@ class ThreadMessage extends Model
         'thread_id', 'message', 'type', 'created_by', 'updated_by', 'deleted_by'
     ];
 
-    protected static function boot() {
+    /**
+     * Automatically assign actions performers data to records
+     */
+    protected static function boot()
+    {
         parent::boot();
 
         static::creating(function ($model) {
@@ -32,7 +36,13 @@ class ThreadMessage extends Model
         });
     }
 
-    public function user() {
+    /**
+     * Gets the user who created the thread message
+     *
+     * @return User
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 }

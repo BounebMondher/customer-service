@@ -36,21 +36,24 @@ class Thread extends Model
     /**
      * Get the messages that belong to the Thread.
      */
-    public function messages() {
+    public function messages()
+    {
         return $this->hasMany(ThreadMessage::class, 'thread_id');
     }
 
     /**
      * Get the admin assigned to handle the Thread.
      */
-    public function assignedTo() {
+    public function assignedTo()
+    {
         return $this->belongsTo(User::class, 'assigned_to');
     }
 
     /**
      * Get the client who create the Thread.
      */
-    public function client() {
+    public function client()
+    {
         return $this->belongsTo(User::class, 'client_id');
     }
 }

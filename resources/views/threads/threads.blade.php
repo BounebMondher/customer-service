@@ -52,7 +52,12 @@
                                     <td>{{$thread['created_at']}}</td>
                                     <td>@if ($thread->assignedTo()->first() !== null){{$thread->assignedTo()->first()->name}}@else
                                             - @endif</td>
-                                    <td><a target="_blank" href="{{ route('threads.generatepdf',['id' => $thread['id']]) }}"><i class="bi bi-file-earmark-pdf"></i> download</a> @if ($thread['status'] != "closed")- <a href="{{ route('threads.close',['id' => $thread['id']]) }}"><i class="bi bi-x-circle"></i> close</a>@endif</td>
+                                    <td><a target="_blank"
+                                           href="{{ route('threads.generatepdf',['id' => $thread['id']]) }}"><i
+                                                    class="bi bi-file-earmark-pdf"></i>
+                                            download</a> @if ($thread['status'] != "closed")- <a
+                                                href="{{ route('threads.close',['id' => $thread['id']]) }}"><i
+                                                    class="bi bi-x-circle"></i> close</a>@endif</td>
                                 </tr>
                             @endforeach
                             </tbody>

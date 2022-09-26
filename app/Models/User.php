@@ -43,7 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function threads() {
+    /**
+     * gets the threads related to the user
+     * @return Thread array
+     */
+    public function threads()
+    {
         return $this->hasMany(Thread::class, 'client_id', 'id')->orderBy("id", "DESC");
     }
 }

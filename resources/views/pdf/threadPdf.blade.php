@@ -9,9 +9,11 @@
 
                     <div class="card-body">
                         @foreach($messages as $message)
-                            <div class="row thread-message" style ="padding:0!important;min-width: 100%!important;margin-bottom: 20px;">
+                            <div class="row thread-message"
+                                 style="padding:0!important;min-width: 100%!important;margin-bottom: 20px;">
                                 <div class="card">
-                                    <div class="card-header" style="@if($message->type === "admin") background-color: lightcoral;color: white; @else text-align: right;background-color: antiquewhite; @endif">
+                                    <div class="card-header"
+                                         style="@if($message->type === "admin") background-color: lightcoral;color: white; @else text-align: right;background-color: antiquewhite; @endif">
                                         {{$message->user()->first()->name}}
                                     </div>
                                     <div class="card-body">

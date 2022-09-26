@@ -8,7 +8,7 @@
                     <div class="card-header"><h2>{{$thread['thread_title']}}</h2></div>
 
                     <div class="card-body">
-                    @foreach($messages as $message)
+                        @foreach($messages as $message)
                             <div class="row thread-message @if($message->type === "admin") admin-message @else client-message @endif">
                                 <div class="card">
                                     <div class="card-header">
@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
                             </div>
-                    @endforeach
+                        @endforeach
                     </div>
                 </div>
                 <div class="add-message-block row">
@@ -31,20 +31,20 @@
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                         </div>
                     @endif
-                        <form method="POST" action="{{ route('threads.storemessage') }}">
-                            @csrf
-                    <div class="form-group{{ $errors->has('message') ? ' has-danger' : '' }}">
+                    <form method="POST" action="{{ route('threads.storemessage') }}">
+                        @csrf
+                        <div class="form-group{{ $errors->has('message') ? ' has-danger' : '' }}">
                         <textarea class="form-control{{ $errors->has('message') ? ' is-invalid' : '' }}" name="message"
                                   id="input-message" required="true" aria-required="true">{{old('message')}}</textarea>
-                        @if ($errors->has('message'))
-                            <span id="name-error" class="error text-danger"
-                                  for="input-message">{{ $errors->first('message') }}</span>
-                        @endif
-                    </div>
-                    <input type="hidden" name="thread_id" value="{{$thread['id']}}"/>
-                    <input type="hidden" name="type" value="{{Auth::user()->role}}"/>
-                    <button type="submit" class="btn btn-outline-success">{{ __('Add reply to thread') }}</button>
-                        </form>
+                            @if ($errors->has('message'))
+                                <span id="name-error" class="error text-danger"
+                                      for="input-message">{{ $errors->first('message') }}</span>
+                            @endif
+                        </div>
+                        <input type="hidden" name="thread_id" value="{{$thread['id']}}"/>
+                        <input type="hidden" name="type" value="{{Auth::user()->role}}"/>
+                        <button type="submit" class="btn btn-outline-success">{{ __('Add reply to thread') }}</button>
+                    </form>
                 </div>
             </div>
         </div>
